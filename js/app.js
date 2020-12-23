@@ -6,6 +6,22 @@ fetch('https://randomuser.me/api/?results=12')
   //.then(randos => console.log(randos.results))
   .then(data => generateEmployee(data))
 
+
+
+
+let search = document.querySelector('.search-container')
+//console.log(search)
+let searchHtml = `
+  <form action="#" method="get">
+      <input type="search" id="search-input" class="search-input" placeholder="Search...">
+      <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+  </form>
+  `
+search.insertAdjacentHTML('beforeend', searchHtml)
+
+
+
+
 function generateEmployee(data) {
   //console.log(data.results.length)
   let gallery = document.getElementById('gallery')
@@ -29,11 +45,11 @@ function generateEmployee(data) {
 }
 
 let cards = document.getElementById('gallery')
-console.log(cards)
+//console.log(cards)
 cards.addEventListener('click', (event) => {
   console.log(event.target.className)
   if (event.target.className === 'card') {
-    console.log('hello')
+    //console.log('hello')
   }
 })
   //element.insertAdjacentHTML('beforeend', 'HTML string')
