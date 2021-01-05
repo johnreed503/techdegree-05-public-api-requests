@@ -26,7 +26,6 @@ getRandomEmployees(randomUserUrl)
 
 
 
-//need to refactor with async await
 function generateEmployees(data) {
   //console.log(data.results.length)
   let gallery = document.getElementById('gallery')
@@ -46,12 +45,24 @@ function generateEmployees(data) {
       `
       gallery.insertAdjacentHTML('beforeend', html)
 };
+
+let employeeCards = document.querySelectorAll('.card')
+console.log(employeeCards.length)
+for (let i = 0; i < employeeCards.length; i++) {
+  employeeCards[i].addEventListener('click', (event) => {
+    console.log(event.target.id)
+    if (i + 1 === event.target.id)
+    console.log(event.target.name.first)
+  })
 }
 
 
 
-let employeeCards = document.querySelectorAll('.card')
-console.log(employeeCards)
+}
+
+
+
+
 
 
 
