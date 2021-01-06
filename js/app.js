@@ -51,7 +51,8 @@ let employeeCards = document.querySelectorAll('.card')
 for (let i = 0; i < employeeCards.length; i++) {
   employeeCards[i].addEventListener('click', (event) => {
     let index = event.currentTarget.id
-    console.log(index)
+    //console.log(index)
+    //console.log(data.results)
     let modalHtml = `
       <div class="modal-container">
           <div class="modal">
@@ -64,7 +65,7 @@ for (let i = 0; i < employeeCards.length; i++) {
                   <hr>
                   <p class="modal-text">${data.results[i].phone}</p>
                   <p class="modal-text">${data.results[i].location.street}, ${data.results[i].location.city}, ${data.results[i].location.state} 97204${data.results[i].location.postcode}</p>
-                  <p class="modal-text">Birthday: ${data.results[i].dob}</p>
+                  <p class="modal-text">Birthday: ${data.results[i].dob.date.slice(5,7)+'/'+data.results[i].dob.date.slice(8,10)+'/'+data.results[i].dob.date.slice(0,4)}</p>
               </div>
           </div>
 
@@ -75,11 +76,18 @@ for (let i = 0; i < employeeCards.length; i++) {
       </div>
       `
       gallery.insertAdjacentHTML('beforeend', modalHtml)
+
+
+      let modalContainer = document.querySelector('.modal-container')
+      console.log(modalContainer)
+      let closeModal = document.querySelector('#modal-close-btn')
+      console.log(closeModal)
+      closeModal.addEventListener('click', (event) =>{
+        console.log('hello')
+        modalContainer.remove()
+      })
   })
 }
-
-
-
 }
 
 
