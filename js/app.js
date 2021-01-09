@@ -47,8 +47,6 @@ for (let i = 0; i < employeeCards.length; i++) {
 
   })
 }
-//TODO
-activeSearch(data)
 }
 
 
@@ -134,22 +132,26 @@ let searchSubmit = document.querySelector('.search-submit')
 
 
 
-function activeSearch(data) {
+function activeSearch() {
   searchInput.addEventListener('keyup', (event) => {
-    let newList = []
-    let lowerCaseSearch = event.target.value.toLowerCase()
-    for (let i = 0; i < data.length; i++){
-      let name = `${data[i].name.first.toLowerCase()} ${data[i].name.last.toLowerCase()}`
-      if (name.includes(lowerCaseSearch)) {
-          newList.push(data[i])
+    cards = document.querySelectorAll('.card')
+    names = document.querySelectorAll('#name')
+    if (cards.length === 12) {
+      lowerCaseSearch = event.target.value.toLowerCase()
+      console.log(lowerCaseSearch)
+      for (let i = 0; i < cards.length; i++){
+        let name = names[i].innerHTML.toLowerCase()
+        if (name.includes(lowerCaseSearch) !== true) {
+          cards[i].style.display = 'none'
+        } else {
+          cards[i].style.display = 'flex'
         }
+      }
     }
-    let gallery = document.getElementById('gallery')
-    gallery.innerHTML = ''
-    console.log(newList)
-    generateEmployees(newList)
   })
 }
+
+activeSearch()
 
 
 
