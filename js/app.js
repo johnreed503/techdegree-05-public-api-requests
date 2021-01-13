@@ -1,10 +1,3 @@
-let gallery = document.getElementById('gallery')
-let noResultsMessage = `<span class='no-results'>No results found</span>`
-gallery.insertAdjacentHTML('beforeend', noResultsMessage)
-message = document.querySelector('.no-results')
-
-
-
 
 //api address to be called, and number of randomusers requested
 const randomUserUrl = 'https://randomuser.me/api/?results=12'
@@ -19,7 +12,7 @@ getRandomEmployees(randomUserUrl)
   .then(data => data = data.results)
   .then(generateEmployees)
   .catch( e => {
-    gallery.innerHTML = '<h1>Sorry, something went wrong, please contact reedjustin77@gmail if the problem persists</h1>';
+    gallery.innerHTML = '<h1>Sorry, something went wrong try refreshing, please contact reedjustin77@gmail if the problem persists</h1>';
     console.error(e);
   })
 
@@ -210,6 +203,12 @@ let searchSubmit = document.querySelector('.search-submit')
 //displays employee cards that actively match whats in the search input
 function activeSearch() {
   searchInput.addEventListener('keyup', (event) => {
+
+    let noResultsMessage = document.querySelector('.message')
+    if (noResultsMessage !== null) {
+      noResultsMessage.remove()
+    }
+
     cards = document.querySelectorAll('.card')
     names = document.querySelectorAll('#name')
     if (cards.length === 12) {
@@ -230,6 +229,10 @@ function activeSearch() {
 //displays emplyee cards that match whats in the search input when the searh button is clicked
 function buttonSearch() {
   searchSubmit.addEventListener('click', (event) => {
+    let noResultsMessage = document.querySelector('.message')
+    if (noResultsMessage !== null) {
+      noResultsMessage.remove()
+    }
     cards = document.querySelectorAll('.card')
     names = document.querySelectorAll('#name')
       lowerCaseSearch = searchInput.value.toLowerCase()
@@ -249,6 +252,7 @@ function buttonSearch() {
 
 
 function noResultsFound() {
+
   cards = document.querySelectorAll('.card')
   // message = document.querySelector('.no-results')
   let counter = 0
@@ -258,10 +262,10 @@ function noResultsFound() {
     }
   }
   if (counter === 0) {
-    console.log(message.style.display)
-    message.style.visibility = 'visible'
-    console.log(message.style.display)
-    message.className = 'results-message'
+    let gallery = document.getElementById('gallery')
+    let noResultsMessage = `<h2 class='message'>No results found</h2>`
+    gallery.insertAdjacentHTML('beforeend', noResultsMessage)
+
   }
 }
 

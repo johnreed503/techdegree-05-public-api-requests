@@ -76,7 +76,7 @@ header h1 {
 }
 
 .results-message {
-	display: flex;
+	visibility: visible;
 	font-size: 2em;
 }
 
