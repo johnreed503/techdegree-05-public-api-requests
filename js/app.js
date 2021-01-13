@@ -1,3 +1,11 @@
+let gallery = document.getElementById('gallery')
+let noResultsMessage = `<span class='no-results'>No results found</span>`
+gallery.insertAdjacentHTML('beforeend', noResultsMessage)
+message = document.querySelector('.no-results')
+
+
+
+
 //api address to be called, and number of randomusers requested
 const randomUserUrl = 'https://randomuser.me/api/?results=12'
 
@@ -10,10 +18,15 @@ async function getRandomEmployees(url) {
 getRandomEmployees(randomUserUrl)
   .then(data => data = data.results)
   .then(generateEmployees)
+  .catch( e => {
+    gallery.innerHTML = '<h1>Sorry, something went wrong, please contact reedjustin77@gmail if the problem persists</h1>';
+    console.error(e);
+  })
 
 //displays 12 employee cards on the screen
 function generateEmployees(data) {
   let gallery = document.getElementById('gallery')
+  gallery.innerHTML =  ''
   for (let i = 0; i < data.length; i++) {
     let html = `
       <div class="card" id="${i}">
@@ -55,7 +68,7 @@ function createModal (data, i) {
     formatedPhone = `${phone.slice(-8,-5)}-${phone.slice(-4)}`
   }
   let modalHtml = `
-  <div class="modal-container">
+  <div class="modal-container" id='${i}'>
       <div class="modal">
           <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
           <div class="modal-info-container">
@@ -83,19 +96,104 @@ function createModal (data, i) {
   })
   let modalPrevButton = document.querySelector('#modal-prev')
   let modalNextButton = document.querySelector('#modal-next')
+
+
+
+
+
+
+
+
   modalPrevButton.addEventListener('click', (event) =>{
+    const cards = document.querySelectorAll('.card')
+    let counter = 0
+    let searchArray = []
+    cards.forEach(card => {
+      if (card.style.display === 'none'){
+        counter++
+      } else {
+        searchArray.push(card)
+      }
+    })
+    //if theres hidden modals
+    if (counter > 0) {
+      let cardPosition = 0
+      let searchArrayPosition = 0
+      for (let i = 0; i < searchArray.length; i++){
+        if (modalContainer.id === searchArray[i].id){
+          cardPosition = searchArray[i].id
+          searchArrayPosition = i
+        }
+      }
+      //let previousIndexPosition = searchArray[searchArrayPosition-1].id
+      if (searchArrayPosition > 0) {
+        let previousIndexPosition = searchArray[searchArrayPosition-1].id
+        modalContainer.remove()
+        createModal(data, previousIndexPosition)
+      }
+      //if theres no hidden modals
+  } else {
     if (i > 0) {
     modalContainer.remove()
     createModal(data, i - 1)
     }
+  }
+  //this is the end of the modalPrevButton
   })
+
+
+
   modalNextButton.addEventListener('click', (event) =>{
+    // if (i < 11) {
+    // modalContainer.remove()
+    // createModal(data, i + 1)
+    // }
+    const cards = document.querySelectorAll('.card')
+    let counter = 0
+    let searchArray = []
+    cards.forEach(card => {
+      if (card.style.display === 'none'){
+        counter++
+      } else {
+        searchArray.push(card)
+      }
+    })
+    //if theres hidden modals
+    if (counter > 0) {
+      let cardPosition = 0
+      let searchArrayPosition = 0
+      for (let i = 0; i < searchArray.length; i++){
+        if (modalContainer.id === searchArray[i].id){
+          cardPosition = searchArray[i].id
+          searchArrayPosition = i
+        }
+      }
+      //let previousIndexPosition = searchArray[searchArrayPosition-1].id
+      if (searchArrayPosition < searchArray.length - 1) {
+        let previousIndexPosition = searchArray[searchArrayPosition+1].id
+        modalContainer.remove()
+        createModal(data, previousIndexPosition)
+      }
+      //if theres no hidden modals
+  } else {
     if (i < 11) {
     modalContainer.remove()
     createModal(data, i + 1)
     }
+  }
   })
+
+
+
+
 }
+
+
+
+
+
+
+
 
 //creates and appends search bar
 let search = document.querySelector('.search-container')
@@ -125,16 +223,15 @@ function activeSearch() {
         }
       }
     }
+    noResultsFound()
   })
 }
 
 //displays emplyee cards that match whats in the search input when the searh button is clicked
 function buttonSearch() {
   searchSubmit.addEventListener('click', (event) => {
-    console.log('hello from search submit')
     cards = document.querySelectorAll('.card')
     names = document.querySelectorAll('#name')
-  //  if (cards.length === 12) {
       lowerCaseSearch = searchInput.value.toLowerCase()
       for (let i = 0; i < cards.length; i++){
         let name = names[i].innerHTML.toLowerCase()
@@ -144,9 +241,30 @@ function buttonSearch() {
           cards[i].style.display = 'flex'
         }
       }
-    //}
+      noResultsFound()
   })
 }
+
+
+
+
+function noResultsFound() {
+  cards = document.querySelectorAll('.card')
+  // message = document.querySelector('.no-results')
+  let counter = 0
+  for (let i = 0; i < cards.length; i++) {
+    if (cards[i].style.display === 'flex') {
+      counter += 1
+    }
+  }
+  if (counter === 0) {
+    console.log(message.style.display)
+    message.style.visibility = 'visible'
+    console.log(message.style.display)
+    message.className = 'results-message'
+  }
+}
+
 
 buttonSearch()
 activeSearch()

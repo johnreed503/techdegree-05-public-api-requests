@@ -70,6 +70,16 @@ header h1 {
    Gallery
 ======================================== */
 
+.no-results {
+	visibility: hidden;
+	font-size: 2em;
+}
+
+.results-message {
+	display: flex;
+	font-size: 2em;
+}
+
 .gallery {
     display: flex;
     flex-direction: row;
