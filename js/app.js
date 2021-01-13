@@ -1,7 +1,5 @@
-
 //api address to be called, and number of randomusers requested
 const randomUserUrl = 'https://randomuser.me/api/?results=12'
-
 //async downloads and parses data for employees
 async function getRandomEmployees(url) {
   const employeeResponse = await fetch(url);
@@ -90,13 +88,7 @@ function createModal (data, i) {
   let modalPrevButton = document.querySelector('#modal-prev')
   let modalNextButton = document.querySelector('#modal-next')
 
-
-
-
-
-
-
-
+  //displays previous modal
   modalPrevButton.addEventListener('click', (event) =>{
     const cards = document.querySelectorAll('.card')
     let counter = 0
@@ -131,16 +123,10 @@ function createModal (data, i) {
     createModal(data, i - 1)
     }
   }
-  //this is the end of the modalPrevButton
   })
 
-
-
+  //display next modal
   modalNextButton.addEventListener('click', (event) =>{
-    // if (i < 11) {
-    // modalContainer.remove()
-    // createModal(data, i + 1)
-    // }
     const cards = document.querySelectorAll('.card')
     let counter = 0
     let searchArray = []
@@ -175,18 +161,7 @@ function createModal (data, i) {
     }
   }
   })
-
-
-
-
 }
-
-
-
-
-
-
-
 
 //creates and appends search bar
 let search = document.querySelector('.search-container')
@@ -203,12 +178,11 @@ let searchSubmit = document.querySelector('.search-submit')
 //displays employee cards that actively match whats in the search input
 function activeSearch() {
   searchInput.addEventListener('keyup', (event) => {
-
+    //removes no results message if there is one
     let noResultsMessage = document.querySelector('.message')
     if (noResultsMessage !== null) {
       noResultsMessage.remove()
     }
-
     cards = document.querySelectorAll('.card')
     names = document.querySelectorAll('#name')
     if (cards.length === 12) {
@@ -229,6 +203,7 @@ function activeSearch() {
 //displays emplyee cards that match whats in the search input when the searh button is clicked
 function buttonSearch() {
   searchSubmit.addEventListener('click', (event) => {
+    //removes no results message if there is one
     let noResultsMessage = document.querySelector('.message')
     if (noResultsMessage !== null) {
       noResultsMessage.remove()
@@ -248,11 +223,8 @@ function buttonSearch() {
   })
 }
 
-
-
-
+//displays a message if there are no search results. Determined by checking for cards with a 'flex' display
 function noResultsFound() {
-
   cards = document.querySelectorAll('.card')
   // message = document.querySelector('.no-results')
   let counter = 0
@@ -269,6 +241,6 @@ function noResultsFound() {
   }
 }
 
-
+//initiates both search types
 buttonSearch()
 activeSearch()
